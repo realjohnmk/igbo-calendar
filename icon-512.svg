@@ -16,25 +16,25 @@
   <!-- Subtle top accent line -->
   <rect x="96" y="0" width="320" height="7" rx="4" fill="url(#gold)" opacity="0.6"/>
 
-  <!-- IGBO — large bold -->
+  <!-- IGBO — large bold, smaller letter-spacing for clarity -->
   <text x="256" y="262"
     text-anchor="middle"
     font-family="Georgia, 'Times New Roman', serif"
-    font-size="178"
+    font-size="160"
     font-weight="bold"
-    letter-spacing="16"
+    letter-spacing="8"
     fill="url(#gold)">IGBO</text>
 
   <!-- Thin divider line -->
   <rect x="106" y="286" width="300" height="4" rx="2" fill="#E8A830" opacity="0.35"/>
 
-  <!-- CALENDAR — light tracking -->
+  <!-- CALENDAR — bolder and brighter -->
   <text x="256" y="352"
     text-anchor="middle"
     font-family="'Gill Sans', Optima, 'Trebuchet MS', sans-serif"
-    font-size="48"
-    font-weight="300"
-    letter-spacing="18"
-    fill="#F5EDD8"
-    opacity="0.85">CALENDAR</text>
+    font-size="52"
+    font-weight="600"
+    letter-spacing="10"
+    fill="#FFD966"
+    opacity="1">CALENDAR</text>
 </svg>
