@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Ọdụ Oge Igbo — Igbo Calendar</title>
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,37 +11,28 @@
 <meta name="apple-mobile-web-app-title" content="Igbo Calendar">
 <meta name="theme-color" content="#1A1208">
 <link rel="apple-touch-icon" href="icon-192.svg">
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --clay:    #C4622D;
-    --gold:    #E8A830;
-    --cream:   #F5EDD8;
-    --dark:    #1A1208;
-    --mid:     #3D2B0E;
-    --light:   #FBF6EC;
-    --eke:     #C4622D;
-    --orie:    #2E7D5E;
-    --afor:    #8B4FAB;
-    --nkwo:    #1C5C9E;
+    --gold: #E8A830;
+    --cream: #F5EDD8;
+    --dark: #1A1208;
+    --eke:  #C4622D;
+    --orie: #2E7D5E;
+    --afor: #8B4FAB;
+    --nkwo: #1C5C9E;
     --text-muted: #8A7255;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     background: var(--dark);
     color: var(--cream);
     font-family: 'Lato', sans-serif;
-    min-height: 100vh;
     min-height: 100dvh;
     overflow-x: hidden;
-    /* safe area for notched phones */
     padding-bottom: env(safe-area-inset-bottom);
   }
-
-  /* ── NOISE TEXTURE ── */
   body::before {
     content: '';
     position: fixed; inset: 0;
@@ -51,346 +40,247 @@
     pointer-events: none; z-index: 0; opacity: 0.4;
   }
 
-  /* ── HEADER ── */
+  /* HEADER */
   header {
-    position: relative;
-    text-align: center;
+    position: relative; text-align: center;
     padding: 3rem 1rem 2rem;
     padding-top: calc(3rem + env(safe-area-inset-top));
     border-bottom: 1px solid rgba(232,168,48,0.25);
-    overflow: hidden;
   }
-
   header::after {
-    content: '';
-    position: absolute;
+    content: ''; position: absolute;
     bottom: 0; left: 50%; transform: translateX(-50%);
     width: 120px; height: 2px;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
-
   .header-symbol {
-    font-size: 2.2rem;
-    margin-bottom: 0.4rem;
-    opacity: 0.8;
-    animation: spin 20s linear infinite;
-    display: inline-block;
+    font-size: 2.2rem; margin-bottom: 0.4rem; opacity: 0.8;
+    animation: spin 20s linear infinite; display: inline-block;
   }
-
   @keyframes spin { to { transform: rotate(360deg); } }
-
   h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.4rem);
-    font-weight: 900;
-    color: var(--gold);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900;
+    color: var(--gold); letter-spacing: -0.02em; line-height: 1.1;
   }
-
   .subtitle {
-    font-size: 0.85rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 0.4rem;
+    font-size: 0.85rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--text-muted); margin-top: 0.4rem;
   }
 
-  /* ── CONTROLS ── */
+  /* CONTROLS */
   .controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    padding: 1.4rem 1rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .nav-btn {
-    background: none;
-    border: 1px solid rgba(232,168,48,0.35);
-    color: var(--gold);
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s;
     display: flex; align-items: center; justify-content: center;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    gap: 0.8rem; padding: 1.2rem 1rem 0.4rem;
+    position: relative; z-index: 1; flex-wrap: wrap;
   }
-
-  .nav-btn:active {
-    background: rgba(232,168,48,0.2);
-    transform: scale(0.95);
+  .nav-btn {
+    background: none; border: 1px solid rgba(232,168,48,0.35);
+    color: var(--gold); width: 42px; height: 42px;
+    border-radius: 50%; font-size: 1.1rem; cursor: pointer;
+    transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation; flex-shrink: 0;
   }
+  .nav-btn:active { background: rgba(232,168,48,0.2); transform: scale(0.95); }
 
   #month-label {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--cream);
-    min-width: 220px;
-    text-align: center;
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700;
+    color: var(--cream); min-width: 200px; text-align: center;
+    cursor: pointer; user-select: none; transition: color 0.2s;
+    border-bottom: 1px dashed rgba(232,168,48,0.3); padding-bottom: 2px;
+  }
+  #month-label:active { color: var(--gold); }
+
+  .today-btn {
+    background: none; border: 1px solid rgba(232,168,48,0.35);
+    color: var(--gold); padding: 0 1rem; height: 34px;
+    border-radius: 100px; font-size: 0.7rem; letter-spacing: 0.14em;
+    text-transform: uppercase; font-weight: 700; cursor: pointer;
+    transition: all 0.2s; -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .today-btn:active { background: rgba(232,168,48,0.2); transform: scale(0.95); }
+
+  .controls-hint {
+    width: 100%; text-align: center;
+    font-size: 0.65rem; color: var(--text-muted);
+    letter-spacing: 0.1em; padding-bottom: 0.8rem;
   }
 
-  /* ── GRID ── */
+  /* JUMP PICKER MODAL */
+  .picker-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75); z-index: 200;
+    align-items: center; justify-content: center;
+  }
+  .picker-overlay.open { display: flex; }
+  .picker-box {
+    background: #231608; border: 1px solid rgba(232,168,48,0.4);
+    border-radius: 20px; padding: 1.8rem 1.5rem 1.5rem;
+    width: min(340px, 90vw);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+    animation: popIn 0.2s ease;
+  }
+  @keyframes popIn {
+    from { opacity:0; transform: scale(0.9); }
+    to   { opacity:1; transform: scale(1); }
+  }
+  .picker-box h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.1rem;
+    color: var(--gold); margin-bottom: 1.3rem; text-align: center;
+  }
+  .picker-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 1.2rem; }
+  .picker-label {
+    font-size: 0.62rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem;
+  }
+  .picker-select, .picker-year-input {
+    width: 100%; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(232,168,48,0.3); border-radius: 10px;
+    color: var(--cream); font-family: 'Lato', sans-serif;
+    font-size: 1rem; padding: 0.6rem 0.7rem; outline: none;
+    appearance: none; -webkit-appearance: none;
+  }
+  .picker-select:focus, .picker-year-input:focus { border-color: var(--gold); }
+  .picker-year-input { text-align: center; }
+  .picker-year-input::placeholder { color: var(--text-muted); }
+  .picker-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .picker-go {
+    background: var(--gold); color: var(--dark); border: none;
+    border-radius: 10px; padding: 0.7rem; font-weight: 700;
+    font-size: 0.9rem; cursor: pointer; touch-action: manipulation; transition: opacity 0.2s;
+  }
+  .picker-go:active { opacity: 0.8; }
+  .picker-cancel {
+    background: rgba(255,255,255,0.05); color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+    padding: 0.7rem; font-size: 0.9rem; cursor: pointer; touch-action: manipulation;
+  }
+
+  /* WEEK STRIP */
+  .week-strip {
+    max-width: 860px; margin: 1.4rem auto 1.2rem;
+    padding: 0 1rem; display: grid;
+    grid-template-columns: repeat(4, 1fr); gap: 0.7rem; position: relative; z-index: 1;
+  }
+  .week-card {
+    border-radius: 12px; padding: 0.9rem 0.6rem; text-align: center; border: 1px solid transparent;
+  }
+  .week-card.eke-card  { background: rgba(196,98,45,0.12);  border-color: rgba(196,98,45,0.3); }
+  .week-card.orie-card { background: rgba(46,125,94,0.12);  border-color: rgba(46,125,94,0.3); }
+  .week-card.afor-card { background: rgba(139,79,171,0.12); border-color: rgba(139,79,171,0.3); }
+  .week-card.nkwo-card { background: rgba(28,92,158,0.12);  border-color: rgba(28,92,158,0.3); }
+  .week-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; }
+  .eke-card  .week-name { color: #f09060; }
+  .orie-card .week-name { color: #5ed4a0; }
+  .afor-card .week-name { color: #c490e8; }
+  .nkwo-card .week-name { color: #70b0f0; }
+  .week-meaning { font-size: 0.68rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  /* GRID */
   .cal-wrap {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 1rem 3rem;
-    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto;
+    padding: 0 1rem 2rem; position: relative; z-index: 1;
   }
-
-  .weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-bottom: 4px;
-  }
-
+  .weekdays { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 4px; }
   .weekday {
-    text-align: center;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding: 0.5rem 0;
+    text-align: center; font-size: 0.62rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-muted); padding: 0.5rem 0;
   }
-
-  .days-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
-
+  .days-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
   .day-cell {
-    aspect-ratio: 1;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0.4rem 0.3rem 0.3rem;
-    cursor: default;
-    transition: all 0.18s;
-    position: relative;
-    overflow: hidden;
-    min-height: 70px;
+    aspect-ratio: 1; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding: 0.4rem 0.3rem 0.3rem; cursor: default;
+    transition: all 0.18s; position: relative; overflow: hidden; min-height: 70px;
     -webkit-tap-highlight-color: transparent;
   }
-
-  .day-cell:active:not(.empty) {
-    background: rgba(255,255,255,0.09);
-    transform: scale(0.96);
-  }
-
+  .day-cell:active:not(.empty) { background: rgba(255,255,255,0.09); transform: scale(0.96); }
   .day-cell.empty { opacity: 0; pointer-events: none; }
-
   .day-cell.today {
-    background: rgba(232,168,48,0.1);
-    border-color: var(--gold);
+    background: rgba(232,168,48,0.1); border-color: var(--gold);
     box-shadow: 0 0 18px rgba(232,168,48,0.15);
   }
-
-  .day-cell.today .day-num {
-    color: var(--gold);
-    font-weight: 700;
-  }
-
-  .day-cell.eke    { border-top: 3px solid var(--eke); }
-  .day-cell.orie   { border-top: 3px solid var(--orie); }
-  .day-cell.afor   { border-top: 3px solid var(--afor); }
-  .day-cell.nkwo   { border-top: 3px solid var(--nkwo); }
-
-  .day-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    line-height: 1;
-  }
-
+  .day-cell.today .day-num { color: var(--gold); font-weight: 700; }
+  .day-cell.eke  { border-top: 3px solid var(--eke); }
+  .day-cell.orie { border-top: 3px solid var(--orie); }
+  .day-cell.afor { border-top: 3px solid var(--afor); }
+  .day-cell.nkwo { border-top: 3px solid var(--nkwo); }
+  .day-num { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 400; line-height: 1; }
   .market-tag {
-    margin-top: auto;
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 1px 5px;
-    border-radius: 3px;
-    opacity: 0.9;
+    margin-top: auto; font-size: 0.56rem; letter-spacing: 0.1em;
+    text-transform: uppercase; font-weight: 700; padding: 1px 5px; border-radius: 3px; opacity: 0.9;
   }
-
   .eke  .market-tag { background: rgba(196,98,45,0.25);  color: #f09060; }
   .orie .market-tag { background: rgba(46,125,94,0.25);  color: #5ed4a0; }
   .afor .market-tag { background: rgba(139,79,171,0.25); color: #c490e8; }
   .nkwo .market-tag { background: rgba(28,92,158,0.25);  color: #70b0f0; }
-
-  .day-cell.eke::before,
-  .day-cell.orie::before,
-  .day-cell.afor::before,
-  .day-cell.nkwo::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40%;
-    border-radius: 8px 8px 0 0;
-    opacity: 0.06;
+  .day-cell.eke::before, .day-cell.orie::before,
+  .day-cell.afor::before, .day-cell.nkwo::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 40%; border-radius: 8px 8px 0 0; opacity: 0.06;
   }
   .day-cell.eke::before  { background: var(--eke); }
   .day-cell.orie::before { background: var(--orie); }
   .day-cell.afor::before { background: var(--afor); }
   .day-cell.nkwo::before { background: var(--nkwo); }
 
-  /* ── INFO PANEL ── */
+  /* INFO */
   .info {
-    max-width: 860px;
-    margin: 0 auto 2rem;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    position: relative; z-index: 1;
+    max-width: 860px; margin: 0 auto 2rem; padding: 0 1rem;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+    gap: 1rem; position: relative; z-index: 1;
   }
-
   .info-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 1.2rem 1rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1.2rem 1rem;
   }
+  .info-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold); margin-bottom: 0.35rem; }
+  .info-card p { font-size: 0.78rem; color: var(--text-muted); line-height: 1.55; }
 
-  .info-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    color: var(--gold);
-    margin-bottom: 0.35rem;
-  }
-
-  .info-card p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    line-height: 1.55;
-  }
-
-  /* ── IGBO WEEK ── */
-  .week-strip {
-    max-width: 860px;
-    margin: 0 auto 1.5rem;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.7rem;
-    position: relative; z-index: 1;
-  }
-
-  .week-card {
-    border-radius: 12px;
-    padding: 1rem 0.8rem;
-    text-align: center;
-    border: 1px solid transparent;
-  }
-
-  .week-card.eke-card  { background: rgba(196,98,45,0.12); border-color: rgba(196,98,45,0.3); }
-  .week-card.orie-card { background: rgba(46,125,94,0.12); border-color: rgba(46,125,94,0.3); }
-  .week-card.afor-card { background: rgba(139,79,171,0.12);border-color: rgba(139,79,171,0.3); }
-  .week-card.nkwo-card { background: rgba(28,92,158,0.12); border-color: rgba(28,92,158,0.3); }
-
-  .week-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
-
-  .eke-card  .week-name { color: #f09060; }
-  .orie-card .week-name { color: #5ed4a0; }
-  .afor-card .week-name { color: #c490e8; }
-  .nkwo-card .week-name { color: #70b0f0; }
-
-  .week-meaning {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
-    letter-spacing: 0.06em;
-  }
-
-  /* ── INSTALL BANNER ── */
+  /* INSTALL BANNER */
   #install-banner {
-    display: none;
-    position: fixed;
+    display: none; position: fixed;
     bottom: calc(1rem + env(safe-area-inset-bottom));
     left: 50%; transform: translateX(-50%);
-    background: var(--mid);
-    border: 1px solid var(--gold);
-    border-radius: 14px;
-    padding: 0.8rem 1.2rem;
-    gap: 0.8rem;
-    align-items: center;
-    z-index: 100;
-    max-width: 340px;
-    width: calc(100% - 2rem);
+    background: #2C1D0A; border: 1px solid var(--gold);
+    border-radius: 14px; padding: 0.8rem 1.2rem;
+    gap: 0.8rem; align-items: center; z-index: 100;
+    max-width: 340px; width: calc(100% - 2rem);
     box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   }
-
   #install-banner.visible { display: flex; }
-
-  #install-banner p {
-    font-size: 0.8rem;
-    color: var(--cream);
-    flex: 1;
-    line-height: 1.4;
-  }
-
+  #install-banner p { font-size: 0.8rem; color: var(--cream); flex: 1; line-height: 1.4; }
   .install-btn {
-    background: var(--gold);
-    color: var(--dark);
-    border: none;
-    padding: 0.45rem 1rem;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.8rem;
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
+    background: var(--gold); color: var(--dark); border: none;
+    padding: 0.45rem 1rem; border-radius: 8px; font-weight: 700;
+    font-size: 0.8rem; cursor: pointer; white-space: nowrap; flex-shrink: 0;
   }
-
   .dismiss-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0 0.2rem;
-    flex-shrink: 0;
+    background: none; border: none; color: var(--text-muted);
+    font-size: 1.2rem; cursor: pointer; padding: 0 0.2rem; flex-shrink: 0;
   }
 
-  /* ── FOOTER ── */
   footer {
-    text-align: center;
-    padding: 1.5rem 1rem 2.5rem;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    position: relative; z-index: 1;
+    text-align: center; padding: 1.5rem 1rem 2.5rem;
+    font-size: 0.72rem; color: var(--text-muted);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border-top: 1px solid rgba(255,255,255,0.06); position: relative; z-index: 1;
   }
 
   @keyframes fadeUp {
     from { opacity:0; transform: translateY(12px); }
     to   { opacity:1; transform: translateY(0); }
   }
-
   .day-cell { animation: fadeUp 0.3s ease both; }
 
   @media (max-width: 520px) {
     .day-cell { min-height: 52px; padding: 0.25rem; }
     .day-num  { font-size: 0.85rem; }
-    .market-tag { font-size: 0.5rem; padding: 1px 3px; }
-    .week-strip { grid-template-columns: repeat(2, 1fr); }
+    .market-tag { font-size: 0.48rem; padding: 1px 3px; }
+    .week-strip { grid-template-columns: repeat(2,1fr); }
+    #month-label { font-size: 1.15rem; min-width: 160px; }
   }
 </style>
 </head>
@@ -402,44 +292,34 @@
   <p class="subtitle">Igbo Calendar &amp; Market Days</p>
 </header>
 
-<div class="week-strip" style="margin-top:1.8rem">
-  <div class="week-card eke-card">
-    <div class="week-name">Eke</div>
-    <div class="week-meaning">Day of Creation</div>
-  </div>
-  <div class="week-card orie-card">
-    <div class="week-name">Orie</div>
-    <div class="week-meaning">Day of Rest</div>
-  </div>
-  <div class="week-card afor-card">
-    <div class="week-name">Afọ</div>
-    <div class="week-meaning">Day of Earth</div>
-  </div>
-  <div class="week-card nkwo-card">
-    <div class="week-name">Nkwo</div>
-    <div class="week-meaning">Day of Trade</div>
-  </div>
+<!-- Igbo 4-day week -->
+<div class="week-strip">
+  <div class="week-card eke-card"><div class="week-name">Eke</div><div class="week-meaning">Day of Creation</div></div>
+  <div class="week-card orie-card"><div class="week-name">Orie</div><div class="week-meaning">Day of Rest</div></div>
+  <div class="week-card afor-card"><div class="week-name">Afọ</div><div class="week-meaning">Day of Earth</div></div>
+  <div class="week-card nkwo-card"><div class="week-name">Nkwo</div><div class="week-meaning">Day of Trade</div></div>
 </div>
 
+<!-- Controls -->
 <div class="controls">
   <button class="nav-btn" id="prev" aria-label="Previous month">&#8592;</button>
-  <div id="month-label"></div>
+  <div id="month-label" title="Tap to jump to any month/year"></div>
   <button class="nav-btn" id="next" aria-label="Next month">&#8594;</button>
+  <button class="today-btn" id="today-btn">Today</button>
 </div>
+<div class="controls-hint">Tap the month name to jump to any date</div>
 
+<!-- Calendar grid -->
 <div class="cal-wrap">
   <div class="weekdays">
-    <div class="weekday">Sun</div>
-    <div class="weekday">Mon</div>
-    <div class="weekday">Tue</div>
-    <div class="weekday">Wed</div>
-    <div class="weekday">Thu</div>
-    <div class="weekday">Fri</div>
+    <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div>
+    <div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div>
     <div class="weekday">Sat</div>
   </div>
   <div class="days-grid" id="days-grid"></div>
 </div>
 
+<!-- Info cards -->
 <div class="info">
   <div class="info-card">
     <h3>Izu Igbo — The Week</h3>
@@ -461,18 +341,47 @@
 
 <footer>Ọ bụ ihe ndụ · It is a thing of life · Igbo Calendar 2026</footer>
 
-<!-- Install prompt banner -->
+<!-- Install banner -->
 <div id="install-banner">
-  <p>Add Igbo Calendar to your home screen for offline use!</p>
+  <p>Add Igbo Calendar to your home screen!</p>
   <button class="install-btn" id="install-btn">Install</button>
   <button class="dismiss-btn" id="dismiss-btn" aria-label="Dismiss">✕</button>
 </div>
 
+<!-- Jump Picker Modal -->
+<div class="picker-overlay" id="picker-overlay">
+  <div class="picker-box">
+    <h3>Jump to Month</h3>
+    <div class="picker-row">
+      <div>
+        <div class="picker-label">Month</div>
+        <select class="picker-select" id="pick-month">
+          <option value="0">January</option><option value="1">February</option>
+          <option value="2">March</option><option value="3">April</option>
+          <option value="4">May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option>
+          <option value="8">September</option><option value="9">October</option>
+          <option value="10">November</option><option value="11">December</option>
+        </select>
+      </div>
+      <div>
+        <div class="picker-label">Year</div>
+        <input class="picker-year-input" id="pick-year" type="number" min="1" max="9999" placeholder="e.g. 2035">
+      </div>
+    </div>
+    <div class="picker-actions">
+      <button class="picker-cancel" id="picker-cancel">Cancel</button>
+      <button class="picker-go" id="picker-go">Go →</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // ── Calendar logic ─────────────────────────────────────────────────
-  const MARKET = ['eke','orie','afor','nkwo'];
+  const MARKET       = ['eke','orie','afor','nkwo'];
   const MARKET_LABEL = ['Eke','Orie','Afọ','Nkwo'];
-  const ANCHOR = new Date(2000, 0, 1);
+  const ANCHOR       = new Date(2000, 0, 1);
+  const MONTHS       = ['January','February','March','April','May','June',
+                        'July','August','September','October','November','December'];
 
   function marketIndex(date) {
     const diff = Math.floor((date - ANCHOR) / 86400000);
@@ -483,92 +392,102 @@
   let viewYear  = today.getFullYear();
   let viewMonth = today.getMonth();
 
-  const MONTHS = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-
   function render() {
-    document.getElementById('month-label').textContent =
-      `${MONTHS[viewMonth]} ${viewYear}`;
-
+    document.getElementById('month-label').textContent = `${MONTHS[viewMonth]} ${viewYear}`;
     const grid = document.getElementById('days-grid');
     grid.innerHTML = '';
-
-    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    const firstDay    = new Date(viewYear, viewMonth, 1).getDay();
     const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
 
     for (let i = 0; i < firstDay; i++) {
-      const blank = document.createElement('div');
-      blank.className = 'day-cell empty';
-      grid.appendChild(blank);
+      const b = document.createElement('div');
+      b.className = 'day-cell empty';
+      grid.appendChild(b);
     }
-
     for (let d = 1; d <= daysInMonth; d++) {
-      const date = new Date(viewYear, viewMonth, d);
-      const mi   = marketIndex(date);
-      const isToday = (d === today.getDate() &&
-                       viewMonth === today.getMonth() &&
-                       viewYear  === today.getFullYear());
-
-      const cell = document.createElement('div');
+      const date    = new Date(viewYear, viewMonth, d);
+      const mi      = marketIndex(date);
+      const isToday = d === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+      const cell    = document.createElement('div');
       cell.className = `day-cell ${MARKET[mi]}${isToday ? ' today' : ''}`;
       cell.style.animationDelay = `${(d + firstDay) * 0.015}s`;
-      cell.innerHTML = `
-        <span class="day-num">${d}</span>
-        <span class="market-tag">${MARKET_LABEL[mi]}</span>
-      `;
+      cell.innerHTML = `<span class="day-num">${d}</span><span class="market-tag">${MARKET_LABEL[mi]}</span>`;
       grid.appendChild(cell);
     }
   }
 
+  // Nav buttons
   document.getElementById('prev').addEventListener('click', () => {
-    viewMonth--;
-    if (viewMonth < 0) { viewMonth = 11; viewYear--; }
-    render();
+    viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } render();
   });
-
   document.getElementById('next').addEventListener('click', () => {
-    viewMonth++;
-    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
-    render();
+    viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } render();
   });
 
-  render();
+  // Today button
+  document.getElementById('today-btn').addEventListener('click', () => {
+    viewYear = today.getFullYear(); viewMonth = today.getMonth(); render();
+  });
 
-  // ── Service Worker ─────────────────────────────────────────────────
+  // Jump picker
+  const overlay     = document.getElementById('picker-overlay');
+  const pickMonth   = document.getElementById('pick-month');
+  const pickYear    = document.getElementById('pick-year');
+
+  document.getElementById('month-label').addEventListener('click', () => {
+    pickMonth.value = viewMonth;
+    pickYear.value  = viewYear;
+    overlay.classList.add('open');
+    pickYear.focus();
+  });
+
+  document.getElementById('picker-cancel').addEventListener('click', () => {
+    overlay.classList.remove('open');
+  });
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+
+  document.getElementById('picker-go').addEventListener('click', () => {
+    const m = parseInt(pickMonth.value);
+    const y = parseInt(pickYear.value);
+    if (!isNaN(y) && y > 0 && y < 10000) {
+      viewMonth = m; viewYear = y; render();
+    }
+    overlay.classList.remove('open');
+  });
+
+  pickYear.addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('picker-go').click();
+  });
+
+  // Service Worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('SW registered:', reg.scope))
-      .catch(err => console.warn('SW failed:', err));
+      .then(r => console.log('SW:', r.scope))
+      .catch(e => console.warn('SW failed:', e));
   }
 
-  // ── Install Prompt ──────────────────────────────────────────────────
+  // Install prompt
   let deferredPrompt = null;
-  const banner   = document.getElementById('install-banner');
+  const banner     = document.getElementById('install-banner');
   const installBtn = document.getElementById('install-btn');
   const dismissBtn = document.getElementById('dismiss-btn');
 
   window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    banner.classList.add('visible');
+    e.preventDefault(); deferredPrompt = e; banner.classList.add('visible');
   });
-
   installBtn.addEventListener('click', async () => {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    banner.classList.remove('visible');
+    deferredPrompt = null; banner.classList.remove('visible');
   });
+  dismissBtn.addEventListener('click', () => banner.classList.remove('visible'));
+  window.addEventListener('appinstalled', () => { banner.classList.remove('visible'); deferredPrompt = null; });
 
-  dismissBtn.addEventListener('click', () => {
-    banner.classList.remove('visible');
-  });
-
-  window.addEventListener('appinstalled', () => {
-    banner.classList.remove('visible');
-    deferredPrompt = null;
-  });
+  render();
 </script>
 </body>
 </html>
